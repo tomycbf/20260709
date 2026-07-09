@@ -1,3 +1,187 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>1S 鋰電池電壓與剩餘電力對應表</title>
+    <style>
+        :root {
+            --primary-color: #2c3e50;
+            --accent-color: #3498db;
+            --bg-color: #f8f9fa;
+            --text-color: #333333;
+            --table-border: #e0e0e0;
+            --highlight-bg: #e8f4fd;
+            --warning-bg: #fff3cd;
+            --warning-text: #856404;
+            --danger-bg: #f8d7da;
+            --danger-text: #721c24;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji";
+            line-height: 1.6;
+            color: var(--text-color);
+            background-color: var(--bg-color);
+            margin: 0;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: #ffffff;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+        }
+
+        h1 {
+            color: var(--primary-color);
+            border-bottom: 2px solid var(--accent-color);
+            padding-bottom: 10px;
+            font-size: 1.8rem;
+            margin-top: 0;
+        }
+
+        h2 {
+            color: var(--primary-color);
+            font-size: 1.4rem;
+            margin-top: 30px;
+            display: flex;
+            align-items: center;
+        }
+
+        p {
+            margin-bottom: 20px;
+            text-align: justify;
+        }
+
+        .intro-box {
+            background-color: #f1f3f5;
+            border-left: 4px solid var(--primary-color);
+            padding: 15px;
+            border-radius: 0 4px 4px 0;
+            margin-bottom: 25px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            font-size: 0.95rem;
+        }
+
+        th, td {
+            padding: 12px 15px;
+            text-align: left;
+            border-bottom: 1px solid var(--table-border);
+        }
+
+        th {
+            background-color: var(--primary-color);
+            color: #ffffff;
+            font-weight: 600;
+        }
+
+        tr:hover {
+            background-color: #fdfdfd;
+        }
+
+        /* 特殊行樣式 */
+        .row-max { background-color: #e6f4ea; font-weight: bold; }
+        .row-storage { background-color: #e8f0fe; }
+        .row-warn { background-color: #fffde7; }
+        .row-danger { background-color: #fce8e6; }
+        .row-cutoff { background-color: #fcedec; font-weight: bold; color: var(--danger-text); }
+
+        .badge {
+            display: inline-block;
+            padding: 3px 8px;
+            border-radius: 4px;
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+        
+        .badge-success { background-color: #c6f6d5; color: #22543d; }
+        .badge-info { background-color: #bee3f8; color: #2a4365; }
+        .badge-warning { background-color: #feebc8; color: #744210; }
+        .badge-danger { background-color: #fed7d7; color: #742a2a; }
+
+        .card {
+            background: #ffffff;
+            border: 1px solid var(--table-border);
+            border-radius: 6px;
+            padding: 20px;
+            margin-top: 15px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.02);
+        }
+
+        .suggestion-title {
+            font-weight: bold;
+            color: #d97706;
+            margin-top: 15px;
+            margin-bottom: 5px;
+        }
+
+        ul {
+            padding-left: 20px;
+            margin-top: 5px;
+        }
+
+        li {
+            margin-bottom: 8px;
+        }
+
+        .note-box {
+            background-color: #f8fafc;
+            border: 1px dashed #cbd5e1;
+            padding: 15px;
+            border-radius: 6px;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>1S 鋰電池電壓與剩餘電力對應表</h1>
+    
+    <div class="intro-box">
+        對於 <strong>1S 鋰電池（標準電壓 3.7V，滿電 4.2V）</strong>，電壓與剩餘電容量（百分比）並非完全線性的關係。因為鋰電池在放電過程中，中期電壓會維持在一個相對穩定的平台期（約 3.7V - 3.8V），而兩端（滿電和快沒電時）電壓變化則非常劇烈。
+    </div>
+
+    <p>以下為您整理常見的 1S 鋰聚合物電池 (LiPo / Li-ion) 電壓與剩餘電力對應表：</p>
+
+    <h2>1S 鋰電池電壓對應表 (標準型 4.2V)</h2>
+    
+    <table>
+        <thead>
+            <tr>
+                <th style="width: 25%;">剩餘電量 (%)</th>
+                <th style="width: 25%;">單節電壓 (V)</th>
+                <th style="width: 50%;">狀態說明</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr class="row-max">
+                <td>100%</td>
+                <td>4.20V</td>
+                <td><span class="badge badge-success">飽和</span> 飽和充飽狀態</td>
+            </tr>
+            <tr>
+                <td>95%</td>
+                <td>4.15V</td>
+                <td>放電初期，電壓下降較快</td>
+            </tr>
+            <tr>
+                <td>90%</td>
+                <td>4.11V</td>
+                <td>-</td>
+            </tr>
+            <tr>
+                <td>85%</td>
+                <td>4.08V</td>
                 <td>-</td>
             </tr>
             <tr>
